@@ -1,0 +1,33 @@
+body {
+    background:  #F0EDCC;
+    color: #02343F;
+}
+
+section {
+    display:grid;
+    gap:1vw;
+    padding: 0 0 0 5vw;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+#apiKey {
+    height: 17px;
+    width: 200px;
+    padding : 0 10px
+}
+
+#ef {
+    width: 50px;
+    height: 17px;
+    padding : 0 10px
+}
+
+#button {
+    text-align-last: right;
+    padding: 1vh 5vw;
+}
+
+#datetime {
+    text-align-last: right;
+    padding: 1vh 5vw;
+}
