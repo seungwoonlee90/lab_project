@@ -8,6 +8,16 @@ section {
     gap:1vw;
     padding: 0 0 0 5vw;
     grid-template-columns: repeat(5, 1fr);
+    height: 1vh;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	padding: 15px 0;
+    text-align: center;
 }
 
 #apiKey {
