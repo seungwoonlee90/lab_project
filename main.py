@@ -3,13 +3,12 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import requests
 
-apiKey = '';
-station = '';
-st = station['측정소코드'].to_list()
+apiKey = os.environ.get("SECURE")
+st = ['S01001', 'S01002']
 
 df = []
 
-for i, s in enumerate(st) :
+for s in st :
     url = f'http://apis.data.go.kr/1480523/WaterQualityService/getRealTimeWaterQualityList?numOfRows=1&siteId={s}&serviceKey={apiKey}&resultType=xml'
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'html.parser')
