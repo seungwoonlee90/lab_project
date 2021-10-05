@@ -12,7 +12,6 @@ for s in st :
     url = f'http://apis.data.go.kr/1480523/WaterQualityService/getRealTimeWaterQualityList?numOfRows=1&siteId={s}&serviceKey={apiKey}&resultType=xml'
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'html.parser')
-    print(soup)
     df.append([soup.find_all('siteid')[0].get_text(),
                soup.find_all('sitename')[0].get_text(),
                soup.find_all('msrdate')[0].get_text(),
@@ -35,5 +34,5 @@ max_iqr = quartile_3 + 1.5 * IQR
 
 df['flag'] = df['temp'].apply(lambda x : 1 if (x < min_iqr) | (x > max_iqr) else 0)
 
-with open('./water_temp.json', 'w', encoding='utf-8') as file:
+with open('./hydrothermal.json', 'w', encoding='utf-8') as file:
     df.to_json(file, force_ascii=False, orient='records')
