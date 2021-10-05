@@ -12,6 +12,7 @@ for s in st :
     url = f'http://apis.data.go.kr/1480523/WaterQualityService/getRealTimeWaterQualityList?numOfRows=1&siteId={s}&serviceKey={apiKey}&resultType=xml'
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'html.parser')
+    print(soup)
     df.append([soup.find_all('siteid')[0].get_text(),
                soup.find_all('sitename')[0].get_text(),
                soup.find_all('msrdate')[0].get_text(),
