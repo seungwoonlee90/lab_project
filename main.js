@@ -1,5 +1,6 @@
 window.onload = function() {
-    axios.get('').then(function(e){
-        console.log(e)
+    axios.get('https://raw.githubusercontent.com/seungwoonlee90/toy_project/master/hydrothermal_energy/hydrothermal.json')
+    .then(function(res){
+        console.log(res.data)
     })
 }
