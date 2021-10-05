@@ -34,5 +34,5 @@ max_iqr = quartile_3 + 1.5 * IQR
 
 df['flag'] = df['temp'].apply(lambda x : 1 if (x < min_iqr) | (x > max_iqr) else 0)
 
-with open('./hydrothermal.json', 'w', encoding='utf-8') as file:
+with open('./hydrothermal.json', 'a', encoding='utf-8') as file:
     df.to_json(file, force_ascii=False, orient='records')
