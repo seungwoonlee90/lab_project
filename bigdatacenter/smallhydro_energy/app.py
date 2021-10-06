@@ -1,14 +1,28 @@
-from flask import Flask, render_template
+import os
+import pandas as pd
+import requests
 
-app = Flask(__name__)
+apiKey = os.environ.get("SECURE")
+obs = pd.read_csv('obscd.csv', encoding='cp949')
+obscds = obs['obscd'].to_list()
 
-@app.route('/')
-def main():
-    return {"members" : ["member1", "member2", "member3"]}
+df = []
 
-@app.route('/home')
-def home():
-    return render_template("index.html")
+for obscd in obscds :
+    url = f'http://www.wamis.go.kr:8080/wamis/openapi/wkw/flw_dtdata?obscd={obscd}&year=2021&output=json&key={apiKey}'
+    res = requests.get(url)
+    data = res.json()
+    if data['count'] != 0 :
+        df.append([obscd, data['list'][-1]['ymd'], data['list'][-1]['fw']])
+    else :
+        pass
+    
+print('수집 완료')
 
-if __name__ == "__main__" :
-    app.run(debug=True)
+df = pd.DataFrame(df, columns= ['obscd', 'ymd', 'fw'])
+df['fw'] = df['fw'].apply(lambda x : '-999' if (x == '-') else x)
+df['fw'] = df['fw'].astype(float)
+res = pd.merge(obs, df, on='obscd', how='outer')
+
+with open('./samllhydro.json', 'a', encoding='utf-8') as file:
+    res.to_json(file, force_ascii=False, orient='records')
