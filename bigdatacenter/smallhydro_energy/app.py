@@ -33,9 +33,10 @@ for obscd in obscds :
 print('수집 완료')
 
 df = pd.DataFrame(df, columns= ['obscd', 'ymd', 'fw'])
-df['fw'] = df['fw'].apply(lambda x : '-999' if (x == '-') else x)
-df['fw'] = df['fw'].astype(float)
 res = pd.merge(obscd_df, df, on='obscd', how='outer')
+res = res.fillna('-999')
+res['fw'] = res['fw'].apply(lambda x : '-999' if (x == '-') else x)
+res['fw'] = res['fw'].astype(float)
 
 with open('./samllhydro.json', 'a', encoding='utf-8') as file:
     res.to_json(file, force_ascii=False, orient='records')
